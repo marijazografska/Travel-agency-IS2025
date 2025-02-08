@@ -1,8 +1,74 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome to Our Travel Agency";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .header-background {
+        background-image: url('https://cdn.abercrombiekent.com/images/bsiop5ln/production/23615997e1ef059dd71df7cf67c2d26cf2c95fb7-4803x2702.jpg?fit=max&auto=format');
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 100vh; /* Adjust the height as needed */
+        margin: 0; /* Remove any default margin */
+        padding: 0; /* Remove any default padding */
+        color: white;
+    }
+
+</style>
+
+
+<!-- Header Section with Background Image -->
+<header class="header-background text-center">
+    <h1 class="display-4">Discover Your Dream Destination</h1>
+    <p class="lead">Explore the world with us! Exclusive deals and beautiful places await.</p>
+    <a href="#" class="btn btn-lg btn-light">Learn More</a>
+</header>
+
+
+<!-- Main Content Section -->
+
+<div class="row">
+    <div class="col-12 col-md-4 mb-4">
+        <div class="card">
+            <img class="card-img-top" src="https://media.istockphoto.com/id/475903022/photo/tropical-paradise-beach.jpg?s=612x612&w=0&k=20&c=0ORMXgxXe596w9f2EotDqQtBvrlsljY6OdCuW6CtuLQ=" alt="Destination">
+            <div class="card-body">
+                <h5 class="card-title">Tropical Paradise</h5>
+                <p class="card-text">Experience serene beaches and tropical weather. Visit the Caribbean islands and unwind.</p>
+                <a href="#" class="btn btn-primary">Book Now</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-4 mb-4">
+        <div class="card">
+            <img class="card-img-top" src="https://media.istockphoto.com/id/891465194/photo/female-tourist-looking-the-basilica-di-santa-maria-della-salute-and-canale-grande-in-venice.jpg?s=612x612&w=0&k=20&c=jkFAmRFn1mFZmWk2VwZFeuE5jJ2eBqxFoIovS0RbySY=" alt="Destination">
+            <div class="card-body">
+                <h5 class="card-title">European Tour</h5>
+                <p class="card-text">Discover the rich history and breathtaking landscapes of Europe with our exclusive tour packages.</p>
+                <a href="#" class="btn btn-primary">Book Now</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-4 mb-4">
+        <div class="card">
+            <img class="card-img-top" src="https://t4.ftcdn.net/jpg/02/74/75/59/360_F_274755986_wgBdzMHVMP96J6V9F4l7y5Befw3iwfqj.jpg" alt="Destination">
+            <div class="card-body">
+                <h5 class="card-title">Adventure Trails</h5>
+                <p class="card-text">Join us on an adventure of a lifetime. Hiking, rafting, and nature tours designed for thrill-seekers.</p>
+                <a href="#" class="btn btn-primary">Book Now</a>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<!-- Footer Section -->
+<footer class="text-center p-3 bg-dark text-white" style="width: 100%;">
+    © 2025 TravelGlobe, Inc. All rights reserved.
+</footer>
