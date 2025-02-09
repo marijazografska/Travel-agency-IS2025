@@ -27,43 +27,28 @@ namespace EShop.Service.Implementation
                 return false;
             }
             List<Itinerary> itineraries = itineraryRepository.GetAll().ToList();
-            //for (int j = 0; j < itineraries.Count(); j++)
-            //{
-                //Itinerary itinerary = itineraries.ElementAt(j);
-                //if (itinerary.ProductId.Equals(i.ProductId))
-                //{
-                    //return false;
-                //}
-            //}
-            Product Product = ProductRepository.Get(i.ProductId);
-            //Product.AlreadyhasItinerary = true;
-            ProductRepository.Update(Product);
             itineraryRepository.Insert(i);
+            
+            Product product = ProductRepository.Get(i.ProductId);
+            product.ItineraryId = i.Id;
+            product.AlreadyhasItinerary = true;
+            ProductRepository.Update(product);
+            
             return true;
 
-
-            //itineraryRepository.Insert(i);
-            //Itinerary itinerary = itineraryRepository.Get(i.Id);
-            //if (!itinerary.Product.AlreadyhasItinerary)
-            //{
-            //    itinerary.Product.AlreadyhasItinerary = true;
-            //    ProductRepository.Update(ProductRepository.Get(itinerary.ProductId));
-            //    return true;
-            //}
-            //itineraryRepository.Delete(itinerary);
-            //return false;
+            
         }
 
         public void DeleteItinerary(Guid id)
         {
             Itinerary itinerary = itineraryRepository.Get(id);
-            Product Product = ProductRepository.Get(itinerary.ProductId);
-            if (Product != null)
-            {
-                //Product.AlreadyhasItinerary = false;
-                ProductRepository.Update(Product);
-            }
+            Product product = ProductRepository.Get(itinerary.ProductId);
+
             itineraryRepository.Delete(itinerary);
+
+            product.AlreadyhasItinerary = false;
+            product.ItineraryId = null;
+            ProductRepository.Update(product);
         }
 
         public List<Itinerary> GetAllItineraries()

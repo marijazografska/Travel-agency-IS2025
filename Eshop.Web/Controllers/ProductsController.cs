@@ -56,6 +56,10 @@ namespace Eshop.Web.Controllers
                 return NotFound();
             }
 
+            var itinerary = _itineraryService.GetDetailsForItinerary(product.ItineraryId);
+            ViewData["Itinerary"] = itinerary;
+
+            
             return View(product);
         }
 
