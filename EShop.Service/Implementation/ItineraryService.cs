@@ -27,16 +27,16 @@ namespace EShop.Service.Implementation
                 return false;
             }
             List<Itinerary> itineraries = itineraryRepository.GetAll().ToList();
-            for (int j = 0; j < itineraries.Count(); j++)
-            {
-                Itinerary itinerary = itineraries.ElementAt(j);
-                if (itinerary.ProductId.Equals(i.ProductId))
-                {
-                    return false;
-                }
-            }
+            //for (int j = 0; j < itineraries.Count(); j++)
+            //{
+                //Itinerary itinerary = itineraries.ElementAt(j);
+                //if (itinerary.ProductId.Equals(i.ProductId))
+                //{
+                    //return false;
+                //}
+            //}
             Product Product = ProductRepository.Get(i.ProductId);
-            Product.AlreadyhasItinerary = true;
+            //Product.AlreadyhasItinerary = true;
             ProductRepository.Update(Product);
             itineraryRepository.Insert(i);
             return true;
@@ -60,7 +60,7 @@ namespace EShop.Service.Implementation
             Product Product = ProductRepository.Get(itinerary.ProductId);
             if (Product != null)
             {
-                Product.AlreadyhasItinerary = false;
+                //Product.AlreadyhasItinerary = false;
                 ProductRepository.Update(Product);
             }
             itineraryRepository.Delete(itinerary);

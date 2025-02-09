@@ -43,7 +43,7 @@ namespace Eshop.Web.Controllers
                 ViewData["ProductId"] = new SelectList(Products, "Id", "ProductName");
                 return View();
             }
-
+        /*
             [HttpPost]
             [ValidateAntiForgeryToken]
             public IActionResult Create(Itinerary itinerary)
@@ -51,13 +51,29 @@ namespace Eshop.Web.Controllers
                 var result = itineraryService.CreateNewItinerary(itinerary);
                 if (result == true)
                 {
-                    return RedirectToAction("Create", "Products", new { id = itinerary.Id });
-                }
+                //return RedirectToAction("Create", "Products", new { id = itinerary.Id });
+                return View(itineraryService.GetAllItineraries());
+            }
                 return RedirectToAction("Error");
 
-            }
+            } */
 
-            public IActionResult Error()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Itinerary itinerary)
+        {
+            var result = itineraryService.CreateNewItinerary(itinerary);
+            if (result == true)
+            {
+                return RedirectToAction("Index");
+            }
+            var products = ProductService.GetAllProducts();
+            ViewData["ProductId"] = new SelectList(products, "Id", "ProductName");
+            return View(itinerary);
+        }
+
+
+        public IActionResult Error()
             {
                 return View();
             }

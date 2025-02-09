@@ -4,6 +4,7 @@ using EShop.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,65 +12,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EShop.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250209133110_third")]
+    partial class third
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("EShop.Domain.Domain.Activity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("EndingTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("PlannedRouteId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("StartingTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ThingsToDo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlannedRouteId");
-
-                    b.ToTable("Activities");
-                });
-
-            modelBuilder.Entity("EShop.Domain.Domain.Itinerary", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique();
-
-                    b.ToTable("Itineraries");
-                });
 
             modelBuilder.Entity("EShop.Domain.Domain.Order", b =>
                 {
@@ -91,36 +45,10 @@ namespace EShop.Repository.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("EShop.Domain.Domain.PlannedRoute", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ItineraryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("RouteDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItineraryId");
-
-                    b.ToTable("PlannedRoutes");
-                });
-
             modelBuilder.Entity("EShop.Domain.Domain.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("AlreadyhasItinerary")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid?>("ItineraryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Price")
@@ -443,28 +371,6 @@ namespace EShop.Repository.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("EShop.Domain.Domain.Activity", b =>
-                {
-                    b.HasOne("EShop.Domain.Domain.PlannedRoute", "PlannedRoute")
-                        .WithMany("Activities")
-                        .HasForeignKey("PlannedRouteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PlannedRoute");
-                });
-
-            modelBuilder.Entity("EShop.Domain.Domain.Itinerary", b =>
-                {
-                    b.HasOne("EShop.Domain.Domain.Product", "Product")
-                        .WithOne("Itinerary")
-                        .HasForeignKey("EShop.Domain.Domain.Itinerary", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("EShop.Domain.Domain.Order", b =>
                 {
                     b.HasOne("EShop.Domain.Identity.EShopApplicationUser", "Owner")
@@ -472,17 +378,6 @@ namespace EShop.Repository.Migrations
                         .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("EShop.Domain.Domain.PlannedRoute", b =>
-                {
-                    b.HasOne("EShop.Domain.Domain.Itinerary", "Itinerary")
-                        .WithMany("PlannedRoutes")
-                        .HasForeignKey("ItineraryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Itinerary");
                 });
 
             modelBuilder.Entity("EShop.Domain.Domain.ProductInOrder", b =>
@@ -583,25 +478,13 @@ namespace EShop.Repository.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EShop.Domain.Domain.Itinerary", b =>
-                {
-                    b.Navigation("PlannedRoutes");
-                });
-
             modelBuilder.Entity("EShop.Domain.Domain.Order", b =>
                 {
                     b.Navigation("ProductsInOrder");
                 });
 
-            modelBuilder.Entity("EShop.Domain.Domain.PlannedRoute", b =>
-                {
-                    b.Navigation("Activities");
-                });
-
             modelBuilder.Entity("EShop.Domain.Domain.Product", b =>
                 {
-                    b.Navigation("Itinerary");
-
                     b.Navigation("ProductInShoppingCarts");
 
                     b.Navigation("ProductsInOrder");
