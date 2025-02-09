@@ -1,20 +1,39 @@
 ﻿@model EShop.Domain.Domain.ProductInShoppingCart
 
-<h1>Add product to Shopping cart</h1>
+<div class="container mt-5">
+    <h1 class="text-center">Add Travel Itinerary to Cart</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg p-4">
+                <form asp-action="AddToCartConfirmed" method="post" onsubmit="redirectToCart(event)">
+                    <input type="hidden" asp-for="ProductId" />
 
-<div class="row">
-    <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="Quantity">Number of people</label>
+                        <input asp-for="Quantity" class="form-control" required />
+                    </div>
 
-        <form asp-action="AddToCartConfirmed">
-            <input type="hidden" asp-for="ProductId" />
-
-            <div class="form-group">
-                <label asp-for="Quantity"></label>
-                <input asp-for="Quantity" class="form-control"/>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">🛒 Add To Cart</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Add To Cart" class="btn-info" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+<script>
+    function redirectToCart(event) {
+        event.preventDefault(); 
+        const form = event.target;
+        
+        fetch(form.action, {
+            method: form.method,
+            body: new FormData(form)
+        }).then(response => {
+            if (response.ok) {
+                window.location.href = "/ShoppingCarts/Index";
+            }
+        }).catch(error => console.error('Error:', error));
+    }
+</script>

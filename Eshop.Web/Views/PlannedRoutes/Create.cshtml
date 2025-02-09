@@ -5,78 +5,86 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create Planned Routes</h1>
-<h4>Define your planned routes below:</h4>
-<hr />
+<div class="container mt-4">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center mb-4">📍 Create Planned Routes</h2>
+        <h5 class="text-muted text-center">Define your planned routes below:</h5>
+        <hr />
 
-<div class="row">
-    <div class="col-md-8">
         <form asp-action="Create" method="post">
             <input type="hidden" name="ItineraryId" value="@ViewBag.ItineraryId" />
 
-            <table class="table" id="routesTable">
-                <thead>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="routesTable">
+                    <thead class="thead-dark">
                     <tr>
                         <th>Route Description</th>
-                        <th>Distance</th>
                         <th>Action</th>
                     </tr>
-                </thead>
-                <tbody id="routesBody">
+                    </thead>
+                    <tbody id="routesBody">
                     @for (int i = 0; i < Model.Count; i++)
                     {
                         <tr>
                             <td>
-                                <input type="text" name="planningRoutes[@i].RouteDescription" class="form-control" required />
+                                <input type="text" name="planningRoutes[@i].RouteDescription" class="form-control" value="@Model[i].RouteDescription" required />
                             </td>
-                            <td>
-                                <input type="number" name="planningRoutes[@i].Distance" class="form-control" required />
-                            </td>
-                            <td>
+                            <td class="text-center">
                                 <button type="button" class="btn btn-danger remove-route">✖</button>
                             </td>
                             <input type="hidden" name="planningRoutes[@i].ItineraryId" value="@ViewBag.ItineraryId" />
                         </tr>
                     }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
 
-            <button type="button" class="btn btn-primary" id="addRoute">➕ Add Route</button>
-
-            <button type="submit" class="btn btn-success">Save Routes</button>
+            <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary" id="addRoute">➕ Add Route</button>
+                <button type="submit" class="btn btn-success">💾 Save Routes</button>
+            </div>
         </form>
+        
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            let routeIndex = @Model.Count; // Start index from the number of existing routes
+            let tbody = document.getElementById("routesBody");
+
+            function updateRouteIndexes() {
+                let rows = tbody.getElementsByTagName("tr");
+                for (let i = 0; i < rows.length; i++) {
+                    let inputs = rows[i].getElementsByTagName("input");
+                    for (let input of inputs) {
+                        if (input.name.includes("RouteDescription")) {
+                            input.name = `planningRoutes[${i}].RouteDescription`;
+                        } else if (input.name.includes("ItineraryId")) {
+                            input.name = `planningRoutes[${i}].ItineraryId`;
+                        }
+                    }
+                }
+            }
 
             document.getElementById("addRoute").addEventListener("click", function () {
-                let tbody = document.getElementById("routesBody");
-
                 let newRow = document.createElement("tr");
                 newRow.innerHTML = `
-                    <td><input type="text" name="planningRoutes[${routeIndex}].RouteDescription" class="form-control" required /></td>
-                    <td><input type="number" name="planningRoutes[${routeIndex}].Distance" class="form-control" required /></td>
-                    <td><button type="button" class="btn btn-danger remove-route">✖</button></td>
-                    <input type="hidden" name="planningRoutes[${routeIndex}].ItineraryId" value="@ViewBag.ItineraryId" />
+                    <td><input type="text" name="planningRoutes[${tbody.rows.length}].RouteDescription" class="form-control" required /></td>
+                    <td class="text-center"><button type="button" class="btn btn-danger remove-route">✖</button></td>
+                    <input type="hidden" name="planningRoutes[${tbody.rows.length}].ItineraryId" value="@ViewBag.ItineraryId" />
                 `;
-
                 tbody.appendChild(newRow);
-                routeIndex++; // Increment index for the next row
             });
 
             document.getElementById("routesTable").addEventListener("click", function (e) {
                 if (e.target.classList.contains("remove-route")) {
                     e.target.closest("tr").remove();
+                    updateRouteIndexes();
                 }
             });
+
+            updateRouteIndexes();
         });
     </script>
 }

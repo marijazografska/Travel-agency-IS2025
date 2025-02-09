@@ -2,46 +2,108 @@
     ViewData["Title"] = "Welcome to Our Travel Agency";
 }
 
+
 <style>
+    * {
+        box-sizing: border-box;
+    }
     body, html {
         margin: 0;
         padding: 0;
         width: 100%;
         height: 100%;
     }
+    header {
+        margin: 0;
+        padding: 0;
+    }
+
 
     .header-background {
         background-image: url('https://cdn.abercrombiekent.com/images/bsiop5ln/production/23615997e1ef059dd71df7cf67c2d26cf2c95fb7-4803x2702.jpg?fit=max&auto=format');
         background-size: cover;
         background-position: center;
+        background-repeat: no-repeat;
         width: 100%;
-        height: 100vh; /* Adjust the height as needed */
+        height: 87vh; /* Adjust the height as needed */
         margin: 0; /* Remove any default margin */
         padding: 0; /* Remove any default padding */
         color: white;
     }
+    
+    .header-content {
+        position: absolute; /* Position relative to .header-background */
+        top: 40%; /* Center vertically */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -50%); /* Adjust for element's own dimensions */
+        text-align: center; /* Center-align text within the container */
+        color: white;
+    }
+    .header-text{
+        text-shadow: 1px 1px 1px #2f2f2f;
+    }
 
+    .header-content h1 {
+        margin: 0; /* Remove default margin */
+    }
+    
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ensures the body takes up full viewport height */
+        margin: 0;
+    }
+
+    header, .row {
+        flex: 1; /* Allows the main content to grow and fill available space */
+    }
+
+
+    
+    .row{
+        margin-top: 1em;
+    }
+    
+    .card-img-top{
+        height: 300px;
+        object-fit: cover;
+    }
+    .display-4{
+        font-size: 60px;
+        font-weight: 700;
+    }
+    .lead{
+        font-size: 20px;
+        font-weight: 500;
+    }
 </style>
 
 
 <!-- Header Section with Background Image -->
 <header class="header-background text-center">
-    <h1 class="display-4">Discover Your Dream Destination</h1>
-    <p class="lead">Explore the world with us! Exclusive deals and beautiful places await.</p>
-    <a href="#" class="btn btn-lg btn-light">Learn More</a>
+    <div class="header-content">
+        <div class='header-text'>
+            <h1 class="display-4">Discover Your Dream Destination</h1>
+            <p class="lead">Explore the world with us! Exclusive deals and beautiful places await.</p>
+        </div>
+        <a class="btn btn-lg btn-light" asp-area="" asp-controller="Products" asp-action="Index">Learn More</a>
+    </div>
+
+   
 </header>
 
 
 <!-- Main Content Section -->
 
 <div class="row">
+    <h2 class="text-center">Our top picks</h2>
     <div class="col-12 col-md-4 mb-4">
         <div class="card">
             <img class="card-img-top" src="https://media.istockphoto.com/id/475903022/photo/tropical-paradise-beach.jpg?s=612x612&w=0&k=20&c=0ORMXgxXe596w9f2EotDqQtBvrlsljY6OdCuW6CtuLQ=" alt="Destination">
             <div class="card-body">
                 <h5 class="card-title">Tropical Paradise</h5>
                 <p class="card-text">Experience serene beaches and tropical weather. Visit the Caribbean islands and unwind.</p>
-                <a href="#" class="btn btn-primary">Book Now</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Products" asp-action="Index">More Info</a>
             </div>
         </div>
     </div>
@@ -51,7 +113,7 @@
             <div class="card-body">
                 <h5 class="card-title">European Tour</h5>
                 <p class="card-text">Discover the rich history and breathtaking landscapes of Europe with our exclusive tour packages.</p>
-                <a href="#" class="btn btn-primary">Book Now</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Products" asp-action="Index">More Info</a>
             </div>
         </div>
     </div>
@@ -61,14 +123,10 @@
             <div class="card-body">
                 <h5 class="card-title">Adventure Trails</h5>
                 <p class="card-text">Join us on an adventure of a lifetime. Hiking, rafting, and nature tours designed for thrill-seekers.</p>
-                <a href="#" class="btn btn-primary">Book Now</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Products" asp-action="Index">More Info</a>
             </div>
         </div>
     </div>
 </div>
 
 
-<!-- Footer Section -->
-<footer class="text-center p-3 bg-dark text-white" style="width: 100%;">
-    © 2025 TravelGlobe, Inc. All rights reserved.
-</footer>

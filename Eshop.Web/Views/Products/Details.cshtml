@@ -1,64 +1,86 @@
-﻿@model EShop.Domain.Domain.Product
+﻿@using EShop.Domain.Domain
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model EShop.Domain.Domain.Product
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var itinerary = ViewData["Itinerary"] as Itinerary;
 }
 
-<h1>Details</h1>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Package Details</h1>
 
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductDescription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductImage)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductImage)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ItineraryId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ItineraryId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AlreadyhasItinerary)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AlreadyhasItinerary)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="AddToCart" asp-route-id="@Model.Id">
-        Book this Trip!
-    </a>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="card mb-4">
+        <div class="position-relative">
+            <img src="@Html.DisplayFor(model => model.ProductImage)" class="card-img-top img-fluid" alt="Product Image" style="height: 500px; object-fit: cover;">
+            <div class="position-absolute top-50 start-50 translate-middle text-center text-white font-weight-bold" style="padding-top:20px;z-index: 1;text-shadow: 1px 1px 1px #2f2f2f;">
+                <h1>@Html.DisplayFor(model => model.ProductName)</h1>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Travel Package Name</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.ProductName)</dd>
+
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.ProductDescription)
+                    Во првиот дел од патувањето сместени сме во срцето на Хавана. Освен што ќе се телепортирате во минатото,
+                    ќе се телепортирате и во шареноликиот свет на музиката, слободата и различностите, а таму ќе ве пречека насмеан народ на кого му се доволни салса,
+                    мохито и пури, за еден магичен и среќен живот. Прошетајте по автентичните улици на шармантната Хавана, впијте ја нејзината енергија, 
+                    нејзините бои и препуштете им се на звуците што ќе ве натераат да почнете да тацувате. Ве очекува возење со стари автомобили од '50-тите и ветар во коса! 
+                    Мохито во Бодегита Дел Медио и даикири во Ел Флоридита - омилените места на Хемингвеј.
+                    </dd>
+
+                <dt class="col-sm-3">Price</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Price) USD</dd>
+
+                <dt class="col-sm-3">Rating</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Rating) / 10</dd>
+            </dl>
+        </div>
+    </div>
+
+    @if (itinerary != null)
+    {
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Itinerary Details</h4>
+            </div>
+            <div class="card-body">
+                <p><strong>Start Date:</strong> @itinerary.StartDate.ToString("MMMM dd, yyyy")</p>
+                <p><strong>End Date:</strong> @itinerary.EndDate.ToString("MMMM dd, yyyy")</p>
+
+                <table class="table table-striped" style="width: 50%;">
+                    <thead>
+                    <tr>
+                        <th>Route Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var route in @itinerary.PlannedRoutes)
+                    {
+                        var words = route.RouteDescription?.Split(' ') ?? new string[0];
+                        var firstTwoWords = words.Length > 1 ? string.Join(" ", words.Take(2)) : route.RouteDescription;
+                        var remainingText = words.Length > 2 ? string.Join(" ", words.Skip(2)) : "";
+
+                        <tr>
+                            <td><strong>@firstTwoWords</strong> @remainingText</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+
+    <div class="d-flex justify-content-between">
+        <a asp-action="AddToCart" asp-route-id="@Model.Id" class="btn btn-primary">Book this Trip!</a>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-secondary btn-sm">Edit</a>
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-sm">Delete</a>
+            <a asp-action="Index" class="btn btn-link btn-sm">Back to List</a>
+        </div>
+    </div>
 </div>

@@ -1,8 +1,12 @@
-﻿@model EShop.Domain.Domain.Product
+﻿@using EShop.Domain.Domain
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model EShop.Domain.Domain.Product
 
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var itinerary = ViewData["Itinerary"] as Itinerary;
+
 }
 
 <h1>Create</h1>
@@ -14,17 +18,17 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ProductName" class="control-label"></label>
+                <label asp-for="ProductName" class="control-label">Name</label>
                 <input asp-for="ProductName" class="form-control" />
                 <span asp-validation-for="ProductName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProductDescription" class="control-label"></label>
+                <label asp-for="ProductDescription" class="control-label">Description</label>
                 <input asp-for="ProductDescription" class="form-control" />
                 <span asp-validation-for="ProductDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProductImage" class="control-label"></label>
+                <label asp-for="ProductImage" class="control-label">Image</label>
                 <input asp-for="ProductImage" class="form-control" />
                 <span asp-validation-for="ProductImage" class="text-danger"></span>
             </div>
@@ -42,6 +46,7 @@
                 <label asp-for="ItineraryId" class="control-label"></label>
                 <input asp-for="ItineraryId" class="form-control" />
                 <span asp-validation-for="ItineraryId" class="text-danger"></span>
+
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
