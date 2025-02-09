@@ -18,6 +18,10 @@ namespace EShop.Domain.Domain
         public int Rating { get; set; }
         public virtual ICollection<ProductInShoppingCart>? ProductInShoppingCarts { get; set; }
         public virtual IEnumerable<ProductInOrder>? ProductsInOrder { get; set; }
+        public Guid? ItineraryId { get; set; }
+        public Itinerary Itinerary { get; set; }
+        public bool AlreadyhasItinerary { get; set; } = false;
+
 
     }
 }

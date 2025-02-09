@@ -30,8 +30,10 @@ builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 builder.Services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
 
 builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
-
+builder.Services.AddTransient<IPlannedRouteService, PlannedRouteService>();
+builder.Services.AddTransient<IItineraryService, ItineraryService>();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IShoppingCartService, ShoppingCartService>();
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));

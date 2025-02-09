@@ -4,6 +4,7 @@ using EShop.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EShop.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250208122650_models2")]
+    partial class models2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +48,7 @@ namespace EShop.Repository.Migrations
 
                     b.HasIndex("PlannedRouteId");
 
-                    b.ToTable("Activities");
+                    b.ToTable("Activity");
                 });
 
             modelBuilder.Entity("EShop.Domain.Domain.Itinerary", b =>
@@ -68,7 +71,7 @@ namespace EShop.Repository.Migrations
                     b.HasIndex("ProductId")
                         .IsUnique();
 
-                    b.ToTable("Itineraries");
+                    b.ToTable("Itinerary");
                 });
 
             modelBuilder.Entity("EShop.Domain.Domain.Order", b =>
@@ -108,7 +111,7 @@ namespace EShop.Repository.Migrations
 
                     b.HasIndex("ItineraryId");
 
-                    b.ToTable("PlannedRoutes");
+                    b.ToTable("PlannedRoute");
                 });
 
             modelBuilder.Entity("EShop.Domain.Domain.Product", b =>
@@ -116,9 +119,6 @@ namespace EShop.Repository.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("AlreadyhasItinerary")
-                        .HasColumnType("bit");
 
                     b.Property<Guid?>("ItineraryId")
                         .HasColumnType("uniqueidentifier");

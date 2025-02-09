@@ -1,4 +1,4 @@
-﻿@model List<EShop.Domain.Domain.Product>
+﻿@model IEnumerable<EShop.Domain.Domain.Product>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,41 +7,66 @@
 
 <h1>Index</h1>
 
-<div class="container">
-    <div class="m-3">
-        <a class="btn btn-success" asp-controller="Products" asp-action="Create">Add new product</a>
-
-    </div>
-
-    @for(int i=0;i<Model.Count; i++)
-    {
-        var item = Model[i];
-        if(i % 3 == 0)
-        {
-            @:<div class="row">
-        }
-        <div class="col-3 m-4">
-
-            <div class="card" style="width: 18rem; height: 35rem">
-                <img class="card-img-top" src="@item.ProductImage" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">@item.ProductName</h5>
-                    <p class="card-text">@item.ProductDescription</p>
-                    <h6>Price: @item.Price</h6>
-                </div>
-                <div class="card-footer">
-                    <a asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info">Edit</a>
-                    <a asp-controller="Products" asp-action="AddToCart" asp-route-id="@item.Id" class="btn btn-info">Add to Cart</a>
-                </div>
-
-            </div>
-        </div>
-
-        if(i % 3 == 2)
-        {
-            @:</div>
-        }
-    }
-</div>
-
-
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItineraryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlreadyhasItinerary)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductImage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItineraryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlreadyhasItinerary)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

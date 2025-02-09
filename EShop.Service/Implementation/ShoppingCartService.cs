@@ -26,7 +26,7 @@ namespace EShop.Service.Implementation
         private readonly IEmailService _emailService;
 
 
-        public ShoppingCartService (IRepository<ProductInOrder> _productInOrderRepository, IRepository<Order> _orderRepository, IUserRepository userRepository, IRepository<ShoppingCart> shoppingCartRepository, IRepository<ProductInShoppingCart> productInShoppingCartRepository, IEmailService emailService)
+        public ShoppingCartService(IRepository<ProductInOrder> _productInOrderRepository, IRepository<Order> _orderRepository, IUserRepository userRepository, IRepository<ShoppingCart> shoppingCartRepository, IRepository<ProductInShoppingCart> productInShoppingCartRepository, IEmailService emailService)
         {
             this._productInOrderRepository = _productInOrderRepository;
             this._orderRepository = _orderRepository;
@@ -151,7 +151,6 @@ namespace EShop.Service.Implementation
             }
             return false;
         }
-        
+
     }
 }
-

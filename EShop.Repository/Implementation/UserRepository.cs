@@ -22,16 +22,19 @@ namespace EShop.Repository.Implementation
         }
         public IEnumerable<EShopApplicationUser> GetAll()
         {
-            return entities.AsEnumerable();
+            return entities.Include(z => z.ShoppingCart)
+                .Include(z => z.ShoppingCart.ProductInShoppingCarts)
+                .Include("ShoppingCart.ProductInShoppingCarts.Product")
+                .AsEnumerable();
         }
 
         public EShopApplicationUser Get(string id)
         {
-            return entities
-               .Include(z => z.ShoppingCart)
-               .Include("ShoppingCart.ProductInShoppingCarts")
-               .Include("ShoppingCart.ProductInShoppingCarts.Product")
-               .SingleOrDefault(s => s.Id == id);
+            var strGuid = id.ToString();
+            return entities.Include(z => z.ShoppingCart)
+                .Include(z => z.ShoppingCart.ProductInShoppingCarts)
+                .Include("ShoppingCart.ProductInShoppingCarts.Product")
+                .SingleOrDefault(s => s.Id == strGuid);
         }
         public void Insert(EShopApplicationUser entity)
         {
