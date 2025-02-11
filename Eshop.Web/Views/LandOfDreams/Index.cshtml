@@ -4,30 +4,74 @@
     ViewData["Title"] = "Hotel Listings";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container mt-4">
+    <h2 class="text-center mb-4 text-primary">@ViewData["Title"]</h2>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Location</th>
-        <th>Map</th>
-        <th>Description</th>
-        <th>Image</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var hotel in Model)
-    {
-        <tr>
-            <td>@hotel["Name"]</td>
-            <td>@hotel["Price"]</td>
-            <td>@hotel["Location"]</td>
-            <td>@Html.Raw(hotel["Map"])</td> <!-- Embed the map iframe -->
-            <td>@hotel["Description"]</td>
-            <td><img src="@hotel["ImageUrl"]" alt="@hotel["Name"]" style="width: 100px; height: auto;" /></td>
-        </tr>
+    <div class="row g-4">
+        @foreach (var hotel in Model)
+        {
+            <div class="col-12">
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="row g-0">
+                        <!-- Left Side - Map -->
+                        <div class="col-md-5">
+                            <div class="map-container">
+                                @Html.Raw(hotel["Map"])
+                            </div>
+                        </div>
+
+                        <!-- Right Side - Hotel Details -->
+                        <div class="col-md-7 d-flex align-items-center">
+                            <div class="card-body">
+                                <h4 class="card-title text-dark fw-bold">@hotel["Name"]</h4>
+                                <p class="card-text"><strong>Location:</strong> @hotel["Location"]</p>
+                                <p class="card-text"><strong>Price:</strong> <span class="text-success fw-bold">$@hotel["Price"]</span></p>
+                                <p class="card-text text-muted">@hotel["Description"]</p>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
     }
-    </tbody>
-</table>
+
+    h2 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #0056b3;
+    }
+
+    .card {
+        background-color: white;
+        transition: 0.3s ease-in-out;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+        .card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+    .map-container {
+        height: 250px;
+        width: 100%;
+        overflow: hidden;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+</style>
