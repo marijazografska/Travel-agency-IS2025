@@ -13,6 +13,7 @@ public class LandOfDreamsController :Controller
         _databaseHelper = databaseHelper;
     }
     
+    /*
     public async Task<IActionResult> Index()
     {
         var hotels = await _databaseHelper.GetDataAsync("SELECT TOP 10 Name, Price, Location, Map, Description, ImageUrl FROM Hotels");
@@ -31,4 +32,15 @@ public class LandOfDreamsController :Controller
         }
         return View(combinedData); 
     }
+    */
+    public async Task<IActionResult> Index()
+    {
+        var query = "SELECT Name, Price, Location, Map, Description, ImageUrl FROM Hotels " +
+                    "UNION ALL " +
+                    "SELECT Name, Price, Location, Map, Description, ImageUrl FROM Apartments";
+
+        var combinedData = await _databaseHelper.GetDataAsync(query);
+        return View(combinedData);
+    }
+
 }

@@ -1,77 +1,41 @@
 @model List<Dictionary<string, object>>
 
 @{
-    ViewData["Title"] = "Hotel Listings";
+    ViewData["Title"] = "Hotel & Apartment Listings";
 }
 
-<div class="container mt-4">
-    <h2 class="text-center mb-4 text-primary">@ViewData["Title"]</h2>
+<h2>@ViewData["Title"]</h2>
 
-    <div class="row g-4">
-        @foreach (var hotel in Model)
+<div class="container">
+    <div class="d-flex flex-wrap">
+        @foreach (var item in Model)
         {
-            <div class="col-12">
-                <div class="card shadow-lg border-0 rounded-4">
-                    <div class="row g-0">
-                        <!-- Left Side - Map -->
-                        <div class="col-md-5">
-                            <div class="map-container">
-                                @Html.Raw(hotel["Map"])
-                            </div>
-                        </div>
-
-                        <!-- Right Side - Hotel Details -->
-                        <div class="col-md-7 d-flex align-items-center">
-                            <div class="card-body">
-                                <h4 class="card-title text-dark fw-bold">@hotel["Name"]</h4>
-                                <p class="card-text"><strong>Location:</strong> @hotel["Location"]</p>
-                                <p class="card-text"><strong>Price:</strong> <span class="text-success fw-bold">$@hotel["Price"]</span></p>
-                                <p class="card-text text-muted">@hotel["Description"]</p>
-
-                                
-                            </div>
-                        </div>
-                    </div>
+            <div class="card m-3" style="width: 18rem;">
+                <img src="@item["ImageUrl"]" alt="@item["Name"]" class="card-img-top" style="height: 150px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">@item["Name"]</h5>
+                    <p class="card-text"><strong>Location:</strong> @item["Location"]</p>
+                    <p class="card-text"><strong>Price:</strong> $@item["Price"]</p>
+                    <p class="card-text">@item["Description"]</p>
+                </div>
+                <div class="card-footer">
+                    @Html.Raw(item["Map"]) <!-- Embedded map iframe -->
                 </div>
             </div>
         }
     </div>
 </div>
 
-<!-- Custom CSS -->
+
 <style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f8f9fa;
-    }
-
-    h2 {
-        font-size: 2rem;
-        font-weight: bold;
-        color: #0056b3;
-    }
-
-    .card {
-        background-color: white;
-        transition: 0.3s ease-in-out;
-        overflow: hidden;
-        border-radius: 10px;
-    }
-
-        .card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-    .map-container {
-        height: 250px;
+    .card-footer {
+        height: 150px;
         width: 100%;
         overflow: hidden;
-        border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
     }
-
-    .card-body {
-        padding: 20px;
+    .container{
+        margin-left: 110px;
     }
 </style>
