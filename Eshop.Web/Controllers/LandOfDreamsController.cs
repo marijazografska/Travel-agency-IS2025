@@ -15,7 +15,20 @@ public class LandOfDreamsController :Controller
     
     public async Task<IActionResult> Index()
     {
-        var data = await _databaseHelper.GetDataAsync("SELECT TOP 10 * FROM Hotels");
-        return View(data); // Pass data to the view
+        var hotels = await _databaseHelper.GetDataAsync("SELECT TOP 10 Name, Price, Location, Map, Description, ImageUrl FROM Hotels");
+        var apartments = await _databaseHelper.GetDataAsync("SELECT TOP 10 Name, Price, Location, Map, Description, ImageUrl FROM Apartments");
+
+        var combinedData = new List<Dictionary<string, object>>();
+        
+        foreach (var hotel in hotels)
+        {
+            combinedData.Add(hotel);
+        }
+
+        foreach (var apartment in apartments)
+        {
+            combinedData.Add(apartment);
+        }
+        return View(combinedData); 
     }
 }
