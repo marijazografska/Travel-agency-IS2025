@@ -7,29 +7,46 @@
 <div class="container mt-4">
     <h2 class="text-center text-primary mb-4">@ViewData["Title"]</h2>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row g-4">
         @foreach (var item in Model)
         {
-            <div class="col">
-                <div class="card h-100 shadow-lg border-0 rounded-4">
-                    <img src="https://landofdreamsapp-bqhhgdcbcsgkatdv.northeurope-01.azurewebsites.net/@item["ImageUrl"]" alt="@item["Name"]" class="card-img-top" style="height: 150px; object-fit: cover; border-top-left-radius: 10px; border-top-right-radius: 10px;">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title fw-bold text-dark">@item["Name"]</h5>
-                        <p class="card-text"><strong>Location:</strong> @item["Location"]</p>
-                        <p class="card-text"><strong>Price:</strong> <span class="text-success fw-bold">$@item["Price"]</span></p>
-                        <p class="card-text">
-                            @{
-                                var description = item["Description"]?.ToString();
-                                var words = description?.Split(' ');
-                                var shortDescription = words != null && words.Length > 50
+            <div class="col-12">
+                <div class="card shadow-lg border-0 rounded-4 d-flex flex-row align-items-stretch">
+
+                    <!-- Left Side: Image -->
+                    <div class="col-md-4">
+                        <img src="@($"https://landofdreamsapp-bqhhgdcbcsgkatdv.northeurope-01.azurewebsites.net/{item["ImageUrl"]}")"
+                             alt="@item["Name"]"
+                             class="img-fluid w-100 h-100 rounded-start"
+                             style="object-fit: cover; min-height: 200px; max-height: 250px;">
+                    </div>
+
+                    <!-- Right Side: Hotel Details -->
+                    <div class="col-md-8 d-flex flex-column justify-content-between p-3">
+                        <div>
+                            <h5 class="card-title fw-bold text-dark">@item["Name"]</h5>
+                            <p class="card-text"><strong>Location:</strong> @item["Location"]</p>
+                            <p class="card-text"><strong>Price:</strong> <span class="text-success fw-bold">$@item["Price"]</span></p>
+                            <p class="card-text">
+                                @{
+                                    var description = item["Description"]?.ToString();
+                                    var words = description?.Split(' ');
+                                    var shortDescription = words != null && words.Length > 50
                                     ? string.Join(" ", words.Take(50)) + "..."
                                     : description;
-                            }
-                            @shortDescription</p>
+                                }
+                                @shortDescription
+                            </p>
+                        </div>
+
+                        <!-- Footer: Map -->
+                        <div class="card-footer bg-white border-0 p-0">
+                            <div class="map-container">
+                                @Html.Raw(item["Map"])
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-footer">
-                        @Html.Raw(item["Map"]) 
-                    </div>
+
                 </div>
             </div>
         }
@@ -37,34 +54,44 @@
 </div>
 
 <style>
-    .card-footer {
-        height: 200px;
-        width: 100%;
-        overflow: hidden;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-    }
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f8f9fa;
-    }
-
-    .container {
-        max-width: 1100px; 
-        margin: 0 auto; 
-    }
-
+    /* Ensure all cards have the same height */
     .card {
-        transition: 0.3s ease-in-out;
+        display: flex;
+        flex-direction: row;
+        height: auto;
+    }
+
+        /* Ensure images are properly sized */
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+    /* Ensure map fits correctly */
+    .map-container iframe {
+        width: 100%;
+        height: 150px;
         border-radius: 10px;
-        width: 100%; 
-        max-width: 22rem; 
-        margin: auto;
     }
 
-    .card:hover {
-        transform: scale(1.03);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* Fix text alignment */
+    .col-md-8 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
+    /* Ensure text fills available space */
+    .card-body {
+        flex-grow: 1;
+    }
+
+    /* Add spacing and remove overflow */
+    .card-footer {
+        max-height: 150px;
+        overflow: hidden;
+    }
 </style>
